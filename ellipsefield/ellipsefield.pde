@@ -11,13 +11,18 @@ void draw() {
   
   PVector loc;
   
-  loc = new PVector(random(height), random(width));
+  loc = new PVector(random(height), random(width/10));
   
-  int num = int(random(16));
+ // loc.x = loc.x + random(70);
+ // loc.y = loc.y + random(70);
+    
+    
+  int num = int(random(25));
   
   for(int i = 0; i<= num; i++) {
-    strokeWeight(random(4));
-    ellipse(loc.x, loc.y, 10 + (i*random(4)), 10 + (i * random(4)));
+    strokeWeight(random(6)/4);
+    ellipse(loc.x, loc.y, 30 + (i*random(7)), 30 + (i * random(7)));
+    
   }
   
 }
