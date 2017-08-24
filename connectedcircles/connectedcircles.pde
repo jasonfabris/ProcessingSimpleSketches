@@ -1,37 +1,33 @@
+import processing.pdf.*;
 
-      size(1000,1000);
-      background(245,245,245);
-      strokeWeight(5);
-      //stroke(0,0,0,200);
-      stroke(180, 25, 215, 70);
-
-      int step = 2;
-      int numpts = 360 / step;
-      int sz = 10;
-      int radius = 250;
-      int idx = 0;
-      PVector[] pts = new PVector[numpts];
+void setup() { 
+   size(1200,1200);
+   background(245,245,245);
+   strokeWeight(5);
+   //stroke(0,0,0,200);
+   stroke(180, 25, 215, 70);
+   //noLoop();
+   beginRecord(PDF,"frame-xxxx.pdf");
+}
+ 
+    void draw() {
+      int gridsize = 3;
       
+      for(int x = 0; x < gridsize; x+=1) {
+        for(int y = 0; y < gridsize; y+=1) {
+    
+          int cx1 = ((width / gridsize) / 2) + (width / gridsize) * x;
+          int cy1 = ((height / gridsize) / 2) + (height / gridsize) * y;  
       
-      for(int i = 0; i < 360; i += step) {
-        
-        float dx = sin(radians(i)) * (radius + (randomGaussian() * radius/25));
-        float dy = cos(radians(i)) * (radius + (randomGaussian() * radius/25));
-        //pts = (PVector[])append(pts, new PVector(dx, dy));
-        pts[idx] = new PVector(dx, dy);
-        idx += 1;        
-        printArray(pts);
+          N_Orb orb1 = new N_Orb(cx1, cy1);
+          orb1.draw_orb();
+        }
       }
     
-    //println(pts[0].x);
-    // draw points
+      if(frameCount == 1) {
+        endRecord();
+        exit();
+      }
     
-    translate(height/2, width/2); 
-    for(int i = 0; i < pts.length; i++) {
-      ellipse(pts[i].x, pts[i].y, sz, sz);
-      
-      int rnd_target = (int)random(pts.length);
-      line(pts[i].x, pts[i].y, pts[rnd_target].x, pts[rnd_target].y);
-      ellipse(pts[rnd_target].x, pts[rnd_target].y, sz, sz);
     }
-    
+   
