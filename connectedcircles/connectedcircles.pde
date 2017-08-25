@@ -6,9 +6,21 @@ void setup() {
    strokeWeight(5);
    //stroke(0,0,0,200);
    
-   frameRate(5);
+   frameRate(.25);
    //noLoop();
-   //beginRecord(PDF,"frame-xxxx.pdf");
+   beginRecord(PDF,"fourbyfour.pdf");
+}
+ 
+static final int poisson(final double lambda) {
+  final double L = Math.exp(-lambda);
+
+  double p = 1;
+  int k = -1;
+
+  do ++k; 
+  while ((p *= Math.random()) > L);
+
+  return k;
 }
  
     void draw() {
@@ -27,10 +39,14 @@ void setup() {
         }
       }
     
-      //if(frameCount == 1) {
-      //  endRecord();
-      //  exit();
-      //}
     
     }
+   
+   void keyPressed() {
+       //if(frameCount == 1) {
+      endRecord();
+      exit();
+      //}
+    
+   }
    
