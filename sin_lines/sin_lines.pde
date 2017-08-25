@@ -1,4 +1,4 @@
-
+import processing.pdf.*;
 int x = 0;
 int num_steps = 100;
  
@@ -6,6 +6,7 @@ void setup() {
  size(1000,1770); 
  strokeWeight(.75);
  background(255,255,255);
+ beginRecord(PDF,"frame-1.pdf");
 }
 
 
@@ -28,4 +29,10 @@ void draw() {
     x += incr;
         
    //}
+}
+
+void keyPressed() {
+  endRecord();
+  exit();
+
 }
