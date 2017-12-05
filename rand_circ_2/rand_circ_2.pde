@@ -1,11 +1,20 @@
+import processing.pdf.*;
+
+int start_w;
+int end_w;
 
 void setup() {
-  size(1200,800);
+  size(1500,1100);
+  beginRecord(PDF, "samp1.pdf");
+  
   background(235,240,245);
   strokeWeight(2);
-  stroke(210,50,20,10);
-  fill(200,50,20,10);
-  frameRate(2);
+  stroke(21,150,20,10);
+  fill(200,30,20,12);
+  frameRate(5);
+  start_w = width / 6 + 20;
+  end_w = (width - 80) / 3; 
+  
 }
 
 void draw() {
@@ -13,18 +22,22 @@ void draw() {
   float x;
   float y;
   
-  radc = 150;
+  radc = 205;
   
-  translate(width/6,height/2);
+  //translate(width/6,height/2);
+  translate(start_w,height/2);
 
   for (int num = 0; num <= 2; num++) {
-  
-    for(int n = 0; n < 4; n++) {
-      translate(randomGaussian()* 3, randomGaussian()*3);  
+    float rad_adj;
+    rad_adj = randomGaussian() * (radc/5) + 2;
+    
+    for(int n = 0; n < 5; n++) {
+      translate(randomGaussian() + n + (end_w/100), randomGaussian() * n + 2);  
         for(int i = 0; i <= 360; i+=5) {
-          float rad_adj;
           
-          rad_adj = randomGaussian() * (radc/5) + 2;
+          //float rad_adj;   //this used to be here
+          rad_adj = rad_adj + randomGaussian() * (n/2) + n;
+          
           x = (radc + rad_adj) * sin(radians(i));
           y = (radc - rad_adj) * cos(radians(i));
           
@@ -32,14 +45,18 @@ void draw() {
           //noFill();
           noStroke();
           ellipse(x,y,10,10);
-        }
-    }
-    translate(width/3,0);
+        }   
+    } //n
+    //translate(width/3,0);
+    translate(end_w,0);
   } //num
+  
 }
 
 void keyPressed() {
- saveFrame("rand_circ_02.tif"); 
+ //saveFrame("rand_circ_03.tif"); 
+ endRecord();
+ exit();
 }
 
 ////x <- seq(-1650,1650, by=0.02)

@@ -14,3 +14,7 @@ void draw() {
   }
   //translate(22,0);
 }
+
+void keyPressed() {
+  saveFrame("circ");
+}

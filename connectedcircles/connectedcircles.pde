@@ -33,9 +33,11 @@ static final int poisson(final double lambda) {
     
           int cx1 = ((width / gridsize) / 2) + (width / gridsize) * x;
           int cy1 = ((height / gridsize) / 2) + (height / gridsize) * y;  
-          int steps = int(poisson(16))+ 1;
+          int steps = int(poisson(20))+ 1;
+          
           N_Orb orb1 = new N_Orb(cx1, cy1, orbwidth, steps);
           orb1.draw_orb_mult(5);
+          //orb1.draw_orb();
         }
       }
     

@@ -5,7 +5,7 @@ int num_wand;
 
 void setup() {
   size(1200,1200);
-  num_wand = 20;
+  num_wand = 12;
   background(255,255,255);
   
   for(int i = 0; i < num_wand; i++) {

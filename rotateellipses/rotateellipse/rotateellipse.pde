@@ -28,3 +28,7 @@ translate(height/2, width/2);
     translate(randomGaussian()*10,randomGaussian()*10);
   }
 }
+
+void keyPressed() {
+ saveFrame("rot_ellipse"); 
+}

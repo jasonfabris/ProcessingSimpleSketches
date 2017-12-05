@@ -82,7 +82,7 @@ class Wander {
   }
 
   void display() {
-    stroke(125,125,125, 200);
+    stroke(125,125,175, 100);
     strokeWeight(1);
     noFill();
     //ellipse(loc.x, loc.y, wsize, wsize);

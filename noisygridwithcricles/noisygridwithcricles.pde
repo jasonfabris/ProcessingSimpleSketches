@@ -5,7 +5,7 @@ int yoffset = (height / gridsize) / 2;
 int sz = 25;
 background(240,240,240);
 
-size(1500,1000);
+size(2000,1250);
   for(int x = 0; x < gridsize; x+=1) {
     for(int y = 0; y < gridsize; y+=1) {
       
@@ -24,9 +24,9 @@ size(1500,1000);
       
       //stroke(10, 30, 95, 40);
       noStroke();
-      fill(10, 30, 95, 60);
+      fill(40, 20, 95, 20);
       //noFill();
-      ellipse(cx1 + randomGaussian() * (xoffset / 5), cy1 + randomGaussian() * (yoffset / 5), sz, sz);     
+      ellipse(cx1 + (randomGaussian() * (xoffset / 5)), cy1 + (randomGaussian() * (yoffset / 5)), sz*2.5, sz*2.5);     
       //println(cx1, " : ", cy1);
       
       strokeWeight(2);
@@ -45,6 +45,7 @@ size(1500,1000);
           } else {
             tmpy = cos(randomGaussian()*n + random(2)) * yoffset;
           }
+          
           ellipse(tmpx, tmpy, 5, 5);
           //point(sin(randomGaussian()/n)*3, cos(pow(randomGaussian()*n,1.5)));
           println("x: ", tmpx, " y: ", tmpy);
@@ -52,3 +53,6 @@ size(1500,1000);
       popMatrix();
     }
   }
+  
+  save("test.tif"); 
+  
