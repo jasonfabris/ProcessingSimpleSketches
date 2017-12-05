@@ -110,6 +110,8 @@ void drawCurve(){
   stroke(0,5,50,10);
   strokeWeight(4);
   noFill();
+  
+  //make the wobbly noisy circle
   beginShape();
   for(int i=0;i<m;i++){
     float theta = i*TWO_PI/m;
