@@ -1,7 +1,7 @@
 import processing.pdf.*;
 String fname; 
 
-fname = String.format("growing_%d%d%d%d%d.pdf", year(), month(), day(), hour(), minute(), second());
+fname = String.format("C:/Users/Jason/Documents/Processing Projects/Output/growing_v3_%d%d%d%d%d.pdf", year(), month(), day(), hour(), minute(), second());
 
 //beginRecord(PDF, fname);
 size(1200,1200);

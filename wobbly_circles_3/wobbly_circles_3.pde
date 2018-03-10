@@ -2,15 +2,17 @@ import processing.pdf.*;
 String fname; 
   fname = String.format("C:/Users/Jason/Documents/Processing Projects/Output/growing_%d%d%d%d%d%d.pdf", year(), month(), day(), hour(), minute(), second());
 
-beginRecord(PDF, fname);
-size(1000,1000);
+//change start radius, step size (5 or 6), c1, nval .08
+
+//beginRecord(PDF, fname);
+size(1200,1200);
 background(255);
 strokeWeight(3);
 smooth();
 
-color c1 = color(random(255),random(255),random(255));
+color c1 = color(random(200),random(255),random(255));
 
-float start_radius=15;
+float start_radius=30;
 int centX = width/2;
 int centY = height/2;
 
@@ -18,7 +20,7 @@ int centY = height/2;
 PVector plt_cent = new PVector();
 plt_cent.set(centX, centY);
 
-int step_size = 5;
+int step_size = 12;
 int num_pts_init = 360 / step_size;
 float nval = 0.03;
 
@@ -41,7 +43,7 @@ for(int i = 0; i < num_pts_init; i++) {
     init_pts[i] = new PVector();
     init_pts[i].set(centX + ((start_radius+jiggle) * cos(rad)), centY + ((start_radius+jiggle) * sin(rad)));
     point(init_pts[i].x,init_pts[i].y);
-  nval += 0.08;  
+  nval += 0.03;  
 }
 
 beginShape();
@@ -51,7 +53,7 @@ for(int i = 0; i < num_pts_init; i++) {
 endShape(CLOSE);
 
 // subsequent circles
-int num_circles = 90; //(int)random(25,45);
+int num_circles = 100; //(int)random(25,45);
 
 PVector circles[][] = new PVector[num_pts_init][num_circles];
 PVector curr_circ[] = new PVector[num_pts_init];
@@ -87,7 +89,7 @@ for(int y = 0; y < num_circles; y++) {
       beginShape();
       
       //comment this out for more monochrome circs
-      //color c1 = color(random(255),random(255),random(255));
+      //c1 = color(random(255),random(255),random(255));
 
       stroke(c1);
       vertex(curr_circ[0].x, curr_circ[0].y);
@@ -102,5 +104,5 @@ for(int y = 0; y < num_circles; y++) {
 
 }
 
-endRecord();
-exit();
+  //  endRecord();
+  //  exit();
