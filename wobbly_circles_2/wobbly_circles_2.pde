@@ -3,7 +3,7 @@ String fname;
 
 fname = String.format("C:/Users/Jason/Documents/Processing Projects/Output/growing_v3_%d%d%d%d%d.pdf", year(), month(), day(), hour(), minute(), second());
 
-//beginRecord(PDF, fname);
+beginRecord(PDF, fname);
 size(1200,1200);
 background(255);
 strokeWeight(3);
@@ -101,11 +101,12 @@ for(int y = 0; y < num_circles; y++) {
 }
 
 //void keyPressed() {
-  save("test1.png");
+  //save("test1.png");
+  endRecord();
+  exit();
 //}
 
-//endRecord();
-//exit();
+//
 
 
 //ellipse(centX,centY,radius*2,radius*2);
