@@ -48,11 +48,11 @@ class Mover {
     }
     
     if (loc.y > height) {
-      if(random(1) < .8) {
+      if(random(1) < .5) {
         vel.y = 0; //stay on bottom
         friends = new float[0]; // lose all your friends
       } else {
-        vel.y = -.2;
+        vel.y = -10;
       }  
     }
     
