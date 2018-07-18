@@ -47,15 +47,13 @@ void draw() {
     
     //generate constellation
     int constel_size = round(randomGaussian()+7);
-    PVector[] constel = new PVector[constel_size];
+    int[] constel = new int[constel_size];
     
     //add first star to constellation
-        constel[0] = new PVector();
-        constel[0].x = star_locs[start_idx].x;
-        constel[0].y = star_locs[start_idx].y;
+        constel[0] = start_idx;
     //build the rest
     constel = make_constellation(start_idx, max_distance, star_locs, constel_size - 1, constel);
-    draw_constellation(constel);
+    draw_constellation(constel, star_locs);
     
     //for(int v = 0; v < constel.length; v++) {
     //  print(constel[v], " - ");
@@ -67,7 +65,53 @@ void draw() {
 //exit();
 }
 
-PVector[] make_constellation(int star_num, float max_dist, PVector[] star_locs, int remaining_size, PVector[] constel_stars) {
+// --------------------
+
+int[] make_constellation(int star_num, float max_dist, PVector[] star_locs, int remaining_size, int[] constel_stars) {
+    //for(int v = 0; v < constel_stars.length; v++) {
+    //  println("Constel stars: ", constel_stars[v]);
+    //}
+    int current_star = star_num;
+    int current_constel_slot = constel_stars.length - remaining_size - 1;
+    //println(current_constel_slot, ":slot ", constel_stars.length, ":size ", remaining_size, ":remain");
+    
+    boolean found_one = false;
+    float dist;
+    int neighbour_idx = 0; 
+    //println(constel_stars.length, remaining_size);
+    
+    
+      if(remaining_size < constel_stars.length - 2 && random(1) < 0.1) { // after the first start, there is a chance we go back to a prev star in the constellation
+          while (found_one == false) {
+            int prior_star_idx = (int)random(current_constel_slot-1)+1;          
+            neighbour_idx = star_num; //prior_star_idx;  
+            found_one = true;
+            constel_stars[current_constel_slot] = prior_star_idx;
+           }
+          println("prev:: neigh-dx: ", neighbour_idx, star_locs[neighbour_idx], " orig-dx: ", star_num, star_locs[star_num]); 
+        } else {
+          while (found_one == false) {
+            int n_idx = (int)random(star_count);
+            dist = star_locs[star_num].dist(star_locs[n_idx]);
+            if(dist < max_dist && dist > (max_dist / 5)) {
+              neighbour_idx = n_idx;
+              found_one = true;
+              constel_stars[current_constel_slot] = neighbour_idx;}
+            }
+          println("new:: neigh-dx: ", neighbour_idx, star_locs[neighbour_idx], " orig-dx: ", star_num, star_locs[star_num]);
+        }
+      
+      if(remaining_size > 0) {
+        remaining_size = remaining_size - 1;  
+        constel_stars = make_constellation(neighbour_idx, max_dist, star_locs, remaining_size, constel_stars);
+      }   
+      return constel_stars;
+  } //find_neighbour
+
+
+// --------------------
+
+PVector[] make_constellation_old(int star_num, float max_dist, PVector[] star_locs, int remaining_size, PVector[] constel_stars) {
     //for(int v = 0; v < constel_stars.length; v++) {
     //  println("Constel stars: ", constel_stars[v]);
     //}
@@ -108,29 +152,30 @@ PVector[] make_constellation(int star_num, float max_dist, PVector[] star_locs, 
       
       if(remaining_size > 0) {
         remaining_size = remaining_size - 1;  
-        constel_stars = make_constellation(neighbour_idx, max_dist, star_locs, remaining_size, constel_stars);
+        constel_stars = make_constellation_old(neighbour_idx, max_dist, star_locs, remaining_size, constel_stars);
       }   
       return constel_stars;
   } //find_neighbour
   
-  void draw_constellation(PVector[] stars) {  
+  void draw_constellation(int[] stars, PVector[] star_locs) { 
+    
     //from 2nd to end, draw from current to previous
     for(int i = 1; i < stars.length; i++) {
         strokeWeight(2);
         stroke(240,240,255,100);
-        line(stars[i].x, stars[i].y, 
-                stars[i-1].x, stars[i-1].y);
+        line(star_locs[stars[i]].x, star_locs[stars[i]].y, 
+                star_locs[stars[i-1]].x, star_locs[stars[i-1]].y);
     } //i
     
     //enhance the stars
     for(int i = 0; i < stars.length; i++) {
       noStroke();
       fill(240, 240, 255, 255);
-      ellipse(stars[i].x, stars[i].y, 10, 10);
+      ellipse(star_locs[stars[i]].x, star_locs[stars[i]].y, 10, 10);
       if(random(1) < .2) {    
       //label some stars
         String star_name = star_names[(int)random(star_names.length)];
-        text(star_name, stars[i].x + 8, stars[i].y +8);
+        text(star_name, star_locs[stars[i]].x + 8, star_locs[stars[i]].y +8);
       }
     }
     
