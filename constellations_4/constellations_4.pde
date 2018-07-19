@@ -2,13 +2,16 @@
 import processing.pdf.*;
 String fname;
 String[] star_names;
+PVector[] star_locs;
 
-int star_count = 4100;
-int constell_count = 1; //round(randomGaussian() + 8) ;
+int star_count = round(randomGaussian() * 1400 + 4100);
+int constell_count = round(randomGaussian() + 12) ;
+
 
 void setup() {
 
   size(1600,1600);
+  frameRate(0.5);
   //fname = String.format("C:/Users/Jason/Documents/Processing Projects/Output/const_accident_%d%d%d%d%d%d.pdf", year(), month(), day(), hour(), minute(), second());
   //beginRecord(PDF, fname);
 
@@ -19,7 +22,7 @@ void setup() {
 
 void draw() {
 
-  PVector[] star_locs = new PVector[star_count];
+  star_locs = new PVector[star_count];
 
   //generate star field
   for(int i = 0; i < star_count; i++) {
@@ -41,8 +44,7 @@ void draw() {
   for (int n = 0; n < constell_count; n++) {
     
     //select start star and get properties
-    int start_idx = (int)random(star_count);
-    float neighbour_count = 1; //random(3);
+    int start_idx = get_start_star(); 
     float max_distance = 125;
     
     //generate constellation
@@ -60,7 +62,7 @@ void draw() {
     //}
   } //n
 
-  noLoop();
+//  noLoop();
 //endRecord();
 //exit();
 }
@@ -81,14 +83,14 @@ int[] make_constellation(int star_num, float max_dist, PVector[] star_locs, int 
     //println(constel_stars.length, remaining_size);
     
     
-      if(remaining_size < constel_stars.length - 2 && random(1) < 0.1) { // after the first start, there is a chance we go back to a prev star in the constellation
+      if(remaining_size < constel_stars.length - 2 && random(1) < 0.5) { // after the first start, there is a chance we go back to a prev star in the constellation
           while (found_one == false) {
-            int prior_star_idx = (int)random(current_constel_slot-1)+1;          
-            neighbour_idx = star_num; //prior_star_idx;  
+            int prior_star_idx = constel_stars[(int)random(current_constel_slot-1)+1];          
+            neighbour_idx = prior_star_idx;  
             found_one = true;
             constel_stars[current_constel_slot] = prior_star_idx;
            }
-          println("prev:: neigh-dx: ", neighbour_idx, star_locs[neighbour_idx], " orig-dx: ", star_num, star_locs[star_num]); 
+        //  println("prev:: neigh-dx: ", neighbour_idx, star_locs[neighbour_idx], " orig-dx: ", star_num, star_locs[star_num]); 
         } else {
           while (found_one == false) {
             int n_idx = (int)random(star_count);
@@ -98,7 +100,7 @@ int[] make_constellation(int star_num, float max_dist, PVector[] star_locs, int 
               found_one = true;
               constel_stars[current_constel_slot] = neighbour_idx;}
             }
-          println("new:: neigh-dx: ", neighbour_idx, star_locs[neighbour_idx], " orig-dx: ", star_num, star_locs[star_num]);
+         // println("new:: neigh-dx: ", neighbour_idx, star_locs[neighbour_idx], " orig-dx: ", star_num, star_locs[star_num]);
         }
       
       if(remaining_size > 0) {
@@ -134,7 +136,7 @@ PVector[] make_constellation_old(int star_num, float max_dist, PVector[] star_lo
             constel_stars[current_constel_slot].x = constel_stars[prior_star_idx].x;
             constel_stars[current_constel_slot].y = constel_stars[prior_star_idx].y;
           }
-          println("previous ", neighbour_idx, " idx ", constel_stars, " orig ", star_locs[star_num]);
+          //println("previous ", neighbour_idx, " idx ", constel_stars, " orig ", star_locs[star_num]);
         } else {
           while (found_one == false) {
             int n_idx = (int)random(star_count);
@@ -147,7 +149,7 @@ PVector[] make_constellation_old(int star_num, float max_dist, PVector[] star_lo
               constel_stars[current_constel_slot].y = star_locs[neighbour_idx].y;
             }
           }
-          println("new ", neighbour_idx, " idx ", star_locs[neighbour_idx], " orig ", star_locs[star_num]);
+          //println("new ", neighbour_idx, " idx ", star_locs[neighbour_idx], " orig ", star_locs[star_num]);
         }
       
       if(remaining_size > 0) {
@@ -181,7 +183,26 @@ PVector[] make_constellation_old(int star_num, float max_dist, PVector[] star_lo
     
   }
   
-  //TODO: Why sometimes really long lines?
+  int get_start_star() {
+    boolean found_one = false;
+    int start_star = 0;
+    while (found_one == false) {
+      println("star count: ", star_count);
+      start_star = (int)random(star_count);
+      println("start_rnd: ", start_star);
+      if(star_locs[start_star].x > width / 25 && 
+            star_locs[start_star].x < width - width/25 && 
+            star_locs[start_star].y > height / 25 && 
+            star_locs[start_star].y < height - height/25) 
+           {
+            found_one = true;
+           }
+    } //while
+     println("start: ", start_star);
+     return start_star;
+  }
+  
+  //TODO: ---fixed Why sometimes really long lines?
   //space out constellations
   //name constellations
   //name sky
