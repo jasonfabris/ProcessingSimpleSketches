@@ -1,7 +1,7 @@
 
 
-int x_cnt = 10;
-int y_cnt = 10;
+int x_cnt = 20;
+int y_cnt = 20;
 int particle_cnt = 100;
 
 int grid_size_x = 100;
@@ -56,8 +56,8 @@ void setup() {
   
   for(int p = 0; p < particle_cnt; p++) {
     PVector particle_loc = new PVector();
-    particle_loc.x = (random(width));
-    particle_loc.y = (random(height));
+    particle_loc.x = (random(width/20));
+    particle_loc.y = (random(height/2));
     
     PVector v = new PVector();
     v.x = random(-1,1);
@@ -70,11 +70,11 @@ void setup() {
 
 
 void draw() {
-  
+  //background(240,240,240);
   //particles
       for(int p = 0; p < particle_cnt; p++) {
         particles[p].get_cell(cells);
-        println("P: ", particles[p].parent_cell.flow_mag.x, particles[p].parent_cell.flow_mag.x);
+        //println("P: ", particles[p].parent_cell.flow_mag.x, particles[p].parent_cell.flow_mag.x);
         particles[p].update();
         
          
@@ -92,5 +92,7 @@ void draw() {
               cells[i][j].update_cell_force();  //make rules about this
           }
        }
+       
+       if(frameCount % 100 == 0) { println(frameCount); }
     
-}
+} //draw

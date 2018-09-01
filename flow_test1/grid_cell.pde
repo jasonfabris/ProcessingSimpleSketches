@@ -18,7 +18,7 @@ class grid_cell {
         //println("centre: ", centre.x, "cell_size: ", cell_size.x);
         
         //scaling factor - power of cell
-        strength = randomGaussian()*3 + 25;
+        strength = randomGaussian()*3 + 15;
         
         ul = new PVector();
         br = new PVector();

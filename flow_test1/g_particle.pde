@@ -21,6 +21,12 @@ class g_particle {
      stroke(map(vel.x, -20, 20, 25, 255) ,25, map(vel.y, -20, 20, 25, 200),map(mass, 0, 75, 100, 15));
      //ellipse(loc.x, loc.y, 20, 20);
      line(loc.x, loc.y, prev_loc.x, prev_loc.y);
+     
+     if (vel.x > 6) {
+       noStroke();
+       fill(map(vel.x, -20, 20, 25, 255) ,25, map(vel.y, -20, 20, 25, 200),map(mass, 0, 75, 10, 2));
+       ellipse(loc.x, loc.y, 25, 25);
+     }
   }
   
   void get_cell(grid_cell[][] cells) {
@@ -32,7 +38,7 @@ class g_particle {
         
         if(loc.x > cells[x][y].ul.x && loc.x < cells[x][y].br.x &&
              loc.y > cells[x][y].ul.y && loc.y < cells[x][y].br.y) {
-               println("Parent: ", cells[x][y].centre.x, cells[x][y].centre.y);
+               //println("Parent: ", cells[x][y].centre.x, cells[x][y].centre.y);
                parent_cell = cells[x][y];
              }           
         //println(cells[x][y].centre.x, " :: ", cells[x][y].cell_size.y);
@@ -44,15 +50,15 @@ class g_particle {
   
   void apply_force(PVector force) {
      vel.add(force);
-     vel.div(10);
+     vel.div(mass); // big impact
   }
   
    void update() {
       prev_loc = loc.get();
       PVector mag = parent_cell.flow_mag.get();
-      println("PMag: ", mag.x, mag.y);
+      //println("PMag: ", mag.x, mag.y);
       acc = PVector.div(mag, mass);
-      println("Acc: ", acc.x, acc.y);
+      //println("Acc: ", acc.x, acc.y);
       
       vel = vel.add(acc); 
       vel.limit(20);
