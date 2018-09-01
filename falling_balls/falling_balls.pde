@@ -9,7 +9,7 @@ void setup() {
   size(1500,1500);
   
    for (int i = 0; i < movers.length; i++) {
-     movers[i] = new Mover(random(width), random(0, height/2), random(20), (int)random(num_friends));
+     movers[i] = new Mover(random(width), random(0, height/2), random(200), (int)random(num_friends));
    }
    
    // if this stays in setup, friends only get made once
